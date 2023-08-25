@@ -1,0 +1,18 @@
+<script>
+    Notification.requestPermission().then(function(permission) {
+        if (permission === 'granted') {
+  
+            var notification = new Notification("{{ name }}", {
+                body: "{{price}}",
+                icon: "{{image}}",
+                data: {
+                    url: "{{link}}"
+                  }
+              });
+  
+              notification.addEventListener('click', function() {
+                window.open(notification.data.url);
+              });
+        }
+        });
+</script>

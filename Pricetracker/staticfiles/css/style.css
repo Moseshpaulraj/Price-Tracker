@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Roboto+Slab&display=swap');
+
+* {
+  text-decoration: none !important;
+}
+
+html {
+  font-size: 14px;
+}
+body {
+  font-family: 'Libre Baskerville', serif;
+  font-family: 'Roboto Slab', serif;
+}
+a {
+  text-decoration: none;
+}
+
+.carousel-item img {
+  object-fit: cover;
+  object-position: top;
+  height: 60vh;
+  overflow: hidden;
+}
+
+
+
+
+

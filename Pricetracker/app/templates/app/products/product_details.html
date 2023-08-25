@@ -1,0 +1,117 @@
+{% extends 'app/layouts/main.html' %}
+{% block title %}
+ShopKart | Online Shopping
+{% endblock title %}
+
+{% block content %}
+<section class="bg-light py-4 my-5" style="min-height:800px;">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+          <h4 class="mb-3" style="margin-top: 30px;">Product Details</h4>
+          <hr style="border-color:#b8bfc2;">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'home' %}"  style="text-decoration: none;">Home</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'collections' products.category.name %}"  style="text-decoration: none;">Collections</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Product</li>
+            </ol>
+          </nav>
+      </div>
+
+      <div class="container mt-5">
+        <div class="row">
+          <div class="col-md-6">
+            <img src="{{ products.image_link }}" alt="{{ products }}" class="img-fluid">
+          </div>
+          <div class="col-md-6 my-3">
+            <h3 >{{products | upper}}</h3>
+            <h5>Offer  :  {{products.offer}}</h5>
+            <h5 class="my-2">Price : {{products.price|last}}</h5>
+            <a href="{{products.url}}" class="btn btn-outline-primary" target="_blank">BUY</a>
+          </div>
+        </div>
+      </div>
+
+            <div class="col-12">
+              <h4 class="mb-3" style="margin-top: 30px;">Price History</h4>
+              <hr style="border-color:#b8bfc2;">
+              <div class="embed-responsive embed-responsive-16by9">
+                <div class="chart-container embed-responsive-item">
+                  <canvas id="chart"></canvas>
+                </div>
+              </div>
+            </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+          const dates = {{ products.date|safe }};
+          const prices = {{ products.price|safe }};
+
+          const chart = new Chart('chart', {
+            type: 'line',
+            data: {
+              labels: dates,
+              datasets: [
+                {
+                  label: 'Price',
+                  data: prices,
+                  backgroundColor: 'rgba(0, 123, 255, 0.5)',
+                  borderColor: 'rgb(0, 123, 255)',
+                  borderWidth: 2,
+                  pointRadius: 5,
+                  pointBackgroundColor: 'rgb(0, 123, 255)',
+                  pointBorderColor: 'rgb(0, 123, 255)',
+                  pointHoverRadius: 8,
+                  pointHoverBackgroundColor: 'rgb(0, 123, 255)',
+                  pointHoverBorderColor: 'rgb(0, 123, 255)',
+                },
+              ],
+            },
+            options: {
+              scales: {
+                xAxes: [
+                  {
+                    type: 'time',
+                    time: {
+                      unit: 'day',
+                      tooltipFormat: 'll',
+                      displayFormats: {
+                        day: 'MMM D',
+                      },
+                    },
+                    ticks: {
+                      source: 'auto',
+                      autoSkip: true,
+                      maxTicksLimit: 20,
+                    },
+                    scaleLabel: {
+                      display: true,
+                      labelString: 'Date',
+                    },
+                  },
+                ],
+                yAxes: [
+                  {
+                    ticks: {
+                      beginAtZero: true,
+                      callback: function (value, index, values) {
+                        return '$' + value;
+                      },
+                    },
+                    scaleLabel: {
+                      display: true,
+                      labelString: 'Price',
+                    },
+                  },
+                ],
+              },
+            },
+          });
+        </script>
+      </div>
+  </div>
+</section>
+
+
+{% endblock content %}
